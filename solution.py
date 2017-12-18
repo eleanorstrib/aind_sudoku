@@ -41,8 +41,23 @@ def naked_twins(values):
     strategy repeatedly).
     """
     # TODO: Implement this function!
-    # for u in unitlist: # search all units: col, box, row
-    #     print (u)
+    two_val_boxes = [box for box in values.keys if len(values[box]) == 2]
+
+    for box in two_val_boxes:
+        for u in unitlist[box]: # search all units: col, box, row
+            if values[u] == values[box]:
+                remove_vals = list(values[box])
+                break
+            for n in remove_vals:
+                if n in values[u]:
+                    values[u] = values[u].replace(n, '')
+    return values
+        # list all of the two value boxes in the puzzle
+
+
+
+    # # check if there are two two-digit values
+    # # if yes, remove those two values from all other boxes in the unit
     return values
     # raise NotImplementedError
 
@@ -69,20 +84,8 @@ def eliminate(values):
     for box in single_values:
         for p in peers[box]:
             values[p] = values[p].replace(values[box], '')
+
     return values
-        # for box in peer_list:
-        #     if len(values[box]) > 1:
-
-        # for p in peer_list:
-        #     if len(values[p]) > 1:
-
-
-                # remove that value from every other item in the dict in peer list
-                 # = {k:('hi' if v=='.' else v) for (k,v) in d.items()}
-    # print(values)
-    # d = dict(zip(boxes, grid))
-    # return {k:('123456789' if v=='.' else v) for (k,v) in d.items()}
-    # raise NotImplementedError
 
 
 def only_choice(values):
