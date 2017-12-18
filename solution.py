@@ -7,7 +7,7 @@ square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','45
 unitlist = row_units + column_units + square_units
 
 # TODO: Update the unit list to add the new diagonal units
-unitlist = unitlist
+unitlist = unitlist + [rows[i] + cols[i] for i in range(len(rows))] + [rows[i] + cols[i] for i in range(len(rows) -1, -1, -1)]
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
@@ -42,16 +42,16 @@ def naked_twins(values):
     """
     # TODO: Implement this function!
     two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
-
-    if two_val_boxes:
-        for box in two_val_boxes:
-            for u in unitlist:
-                if values[u] == values[box]:
-                    remove_vals = list(values[box])
-                    break
-                for n in remove_vals:
-                    if n in values[u]:
-                        values[u] = values[u].replace(n, '')
+    #
+    # if two_val_boxes:
+    #     for box in two_val_boxes:
+    #         for p in peers[box]:
+    #             if values[p] == values[box]:
+    #                 remove_vals = list(values[box])
+    #
+    #                 for n in remove_vals:
+    #                     if n in values[p]:
+    #                         values[p] = values[p].replace(n, '')
     return values
     # raise NotImplementedError
 
