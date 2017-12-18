@@ -41,23 +41,17 @@ def naked_twins(values):
     strategy repeatedly).
     """
     # TODO: Implement this function!
-    two_val_boxes = [box for box in values.keys if len(values[box]) == 2]
+    two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
 
-    for box in two_val_boxes:
-        for u in unitlist[box]: # search all units: col, box, row
-            if values[u] == values[box]:
-                remove_vals = list(values[box])
-                break
-            for n in remove_vals:
-                if n in values[u]:
-                    values[u] = values[u].replace(n, '')
-    return values
-        # list all of the two value boxes in the puzzle
-
-
-
-    # # check if there are two two-digit values
-    # # if yes, remove those two values from all other boxes in the unit
+    if two_val_boxes:
+        for box in two_val_boxes:
+            for u in unitlist:
+                if values[u] == values[box]:
+                    remove_vals = list(values[box])
+                    break
+                for n in remove_vals:
+                    if n in values[u]:
+                        values[u] = values[u].replace(n, '')
     return values
     # raise NotImplementedError
 
