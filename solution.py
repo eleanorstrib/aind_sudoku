@@ -45,10 +45,30 @@ def naked_twins(values):
     strategy repeatedly).
     """
     # TODO: Implement this function!
+    # find all two value boxes - potential naked twins pairs
     two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
-    #
+    twin_vals = [] #instantiating a list of potential twin values
 
-    # raise NotImplementedError
+    for box in two_val_boxes:
+        box_peers = peers[box]
+        # list peers that also have two values - potential pair to current box
+        box_p2 = [p for p in box_peers if len(values[p]) == 2]
+
+        for b in box_p2:
+            # check if the values are the same - order will always be the same for any two values
+            if values[b] == values[box]:
+                # turn string into a list so we can look for each one in peer group
+                twin_vals = list(values[box])
+                # cycle through values in each peer box and remove them if they are in the twin_vals list
+                box_peers.remove(b) # remove the peer box from list of boxes to remove digits from
+
+        # cycle through peer boxes of naked twins and remove digits identified if present
+        for box in box_peers:
+            for num in twin_vals:
+                if num in values[box]:
+                    values[box].replace(num, '')
+
+    return values
 
 
 def eliminate(values):
@@ -69,7 +89,6 @@ def eliminate(values):
     """
     # TODO: Copy your code from the classroom and modify it to complete this function
     single_values = [box for box in values.keys() if len(values[box]) == 1]
-
     for box in single_values:
         for p in peers[box]:
             values[p] = values[p].replace(values[box], '')
@@ -200,7 +219,9 @@ def solve(grid):
     """
     values = grid2values(grid)
     values = reduce_puzzle(values)
+    values = naked_twins(values)
     values = search(values)
+
     return values
 
 
