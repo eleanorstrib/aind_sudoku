@@ -97,7 +97,9 @@ class TestDiagonalSudoku(unittest.TestCase):
                           'D1': '5'}
 
     def test_solve(self):
+        self.maxDiff = None
         self.assertEqual(solution.solve(self.diagonal_grid), self.solved_diag_sudoku)
+
 
 if __name__ == '__main__':
     unittest.main()
