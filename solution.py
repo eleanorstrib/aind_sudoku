@@ -146,10 +146,8 @@ def reduce_puzzle(values):
     while not stalled:
         # Check how many boxes have a determined value
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
-
         # Your code here: Use the Eliminate Strategy
         eliminate(values)
-
         # Your code here: Use the Only Choice Strategy
         only_choice(values)
         # Check how many boxes have a determined value, to compare
@@ -185,6 +183,8 @@ def search(values):
     # TODO: Copy your code from the classroom to complete this function
         # First, reduce the puzzle using the previous function
     values = reduce_puzzle(values)
+    values = naked_twins(values)
+    
     if values is False:
         return False
     # check if it's solved e.g. length of all values in boxes is 1
@@ -218,8 +218,6 @@ def solve(grid):
         The dictionary representation of the final sudoku grid or False if no solution exists.
     """
     values = grid2values(grid)
-    values = reduce_puzzle(values)
-    values = naked_twins(values)
     values = search(values)
 
     return values
