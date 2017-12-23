@@ -183,8 +183,7 @@ def search(values):
     # TODO: Copy your code from the classroom to complete this function
         # First, reduce the puzzle using the previous function
     values = reduce_puzzle(values)
-    values = naked_twins(values)
-    
+
     if values is False:
         return False
     # check if it's solved e.g. length of all values in boxes is 1
