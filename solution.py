@@ -50,7 +50,7 @@ def naked_twins(values):
     twin_vals = [] #instantiating a list of potential twin values
 
     for box in two_val_boxes:
-        box_peers = peers[box]
+        box_peers = list(peers[box]) #create a copy of the list
         # list peers that also have two values - potential pair to current box
         box_p2 = [p for p in box_peers if len(values[p]) == 2]
 
