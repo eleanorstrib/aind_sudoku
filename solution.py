@@ -47,36 +47,38 @@ def naked_twins(values):
     # TODO: Implement this function!
     # find all two value boxes in the puzzle - potential naked twins pairs
     two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
+    nt_dict = {k:[] for k in two_val_boxes}
 
-    # go through the list of 2 value boxes
-    for box in two_val_boxes:
-        #42
+    # fill in the values for peer boxes with the same values
+    for box in nt_dict.keys():
         box_peers = list(peers[box]) # create a copy of the peers list
         # list peers that have 2 values
-        box_p2 = [p for p in box_peers if len(values[p]) == 2]
-        #[42, 30, 45]
-        # look through this list and see if I have a match for my box
-        box_same = [i for i in box_p2 if values[i] == values[box]]
-        # [42]
-        box_val = list(values[box])
+        box_p2 = [p for p in box_peers if values[p] == values[box]]
+        # for each peer, check if the peer values are the same as the
+        nt_dict[box] = box_p2
+    print(nt_dict)
+    # replace values in relevant row, col
 
+    for k, v in nt_dict.items():
+        # determine if the two values are in a row, column or diagonal
+        if len(v) >= 1:
+            if k[0] ==  v[0][0]:
+                check_group = [k[0] + str(i) for i in cols]
+            elif k[1] == v[0][1]:
+                check_group = [str(i) + k[1]  for i in rows]
+            else:
+                check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
+            vals = list(values[k])
 
-
-    #     for b in box_p2:
-    #         # check if the values are the same - order will always be the same for any two values
-    #         if values[b] == values[box]:
-    #             # turn string into a list so we can look for each one in peer group
-    #             twin_vals = list(values[box])
-    #             # cycle through values in each peer box and remove them if they are in the twin_vals list
-    # box_peers.remove(b) # remove the peer box from list of boxes to remove digits from
-    #
-    # # cycle through peer boxes of naked twins and remove digits identified if present
-    # for box in box_peers:
-    #     for num in twin_vals:
-    #         if num in values[box]:
-    #             values[box].replace(num, '')
-
-    return values
+            # iterate through the group and remove nt values
+            for c in check_group:
+                if c != k and c != v and len(values[c]) > 1:
+                    p_vals = list(values[c])
+                    for i in vals:
+                        if i in p_vals and len(p_vals) > 1:
+                            del p_vals[p_vals.index(i)]
+                            values[c] = ''.join(p_vals)
+    return (values)
 
 
 def eliminate(values):

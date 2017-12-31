@@ -32,6 +32,7 @@ values = {'I6': '4', 'H9': '3', 'I2': '6', 'E8': '1', 'H3': '5', 'H7': '8', 'I7'
                         'D7': '34', 'D4': '237', 'D5': '347', 'B8': '3', 'B9': '4', 'D1': '5'}
 
 def naked_twins(values):
+    print(values)
     # find all two value boxes in the puzzle - potential naked twins pairs
     two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
     nt_dict = {k:[] for k in two_val_boxes}
@@ -45,7 +46,9 @@ def naked_twins(values):
         nt_dict[box] = box_p2
     print(nt_dict)
     # replace values in relevant row, col
+
     for k, v in nt_dict.items():
+        # determine if the two values are in a row, column or diagonal
         if len(v) >= 1:
             if k[0] ==  v[0][0]:
                 check_group = [k[0] + str(i) for i in cols]
@@ -55,15 +58,16 @@ def naked_twins(values):
                 check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
             vals = list(values[k])
 
+            # iterate through the group and remove nt values
             for c in check_group:
-                if c != to k and c != v:
+                if c != k and c != v and len(values[c]) > 1:
                     p_vals = list(values[c])
-                    print (p_vals, vals)
                     for i in vals:
-                        if i in p_vals:
-                            print((values[p]))
-                            values[p].replace(i, '')
-
+                        if i in p_vals and len(p_vals) > 1:
+                            del p_vals[p_vals.index(i)]
+                            print("before", c, values[c])
+                            values[c] = ''.join(p_vals)
+                            print("after", c, values[c])
     return (values)
 
 
