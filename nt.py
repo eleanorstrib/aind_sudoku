@@ -53,10 +53,12 @@ def naked_twins(values):
                 check_group = [str(i) + k[1]  for i in rows]
             else:
                 check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
-            if len(v) >= 1:
-                vals = list(values[k])
-                for p in peers[k]:
-                    p_vals = list(values[p])
+            vals = list(values[k])
+
+            for c in check_group:
+                if c != to k and c != v:
+                    p_vals = list(values[c])
+                    print (p_vals, vals)
                     for i in vals:
                         if i in p_vals:
                             print((values[p]))
