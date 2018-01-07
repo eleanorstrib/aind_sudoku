@@ -56,7 +56,7 @@ def naked_twins(values):
         box_p2 = [p for p in box_peers if values[p] == values[box]]
         # for each peer, check if the peer values are the same as the
         nt_dict[box] = box_p2
-    print(nt_dict)
+
     # replace values in relevant row, col
 
     for k, v in nt_dict.items():

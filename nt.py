@@ -32,43 +32,55 @@ values = {'I6': '4', 'H9': '3', 'I2': '6', 'E8': '1', 'H3': '5', 'H7': '8', 'I7'
                         'D7': '34', 'D4': '237', 'D5': '347', 'B8': '3', 'B9': '4', 'D1': '5'}
 
 def naked_twins(values):
-    print(values)
+    # iterate through each unit list:
+    for unit in unitlist:
+        # check if any value for a square in the list is equal to any other value
+        v_list = [values[square] for square in unit]
+        dupes = [u for u in v_list if v_list.count(u) > 1 and len(u) == 2]
+        print(dupes)
+        # uniques = list(set([values[square] for square in unit]))
+        # # proceed if the length of the uniques is shorter than the length of the unit
+        # if len(uniques) < len(unit):
+        #     dupes = {k:v for k, v in }
+        # else:
+        #     continue
     # find all two value boxes in the puzzle - potential naked twins pairs
-    two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
-    nt_dict = {k:[] for k in two_val_boxes}
+    # two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
+    # nt_dict = {k:[] for k in two_val_boxes}
 
-    # fill in the values for peer boxes with the same values
-    for box in nt_dict.keys():
-        box_peers = list(peers[box]) # create a copy of the peers list
-        # list peers that have 2 values
-        box_p2 = [p for p in box_peers if values[p] == values[box]]
-        # for each peer, check if the peer values are the same as the
-        nt_dict[box] = box_p2
-    print(nt_dict)
-    # replace values in relevant row, col
 
-    for k, v in nt_dict.items():
-        # determine if the two values are in a row, column or diagonal
-        if len(v) >= 1:
-            if k[0] ==  v[0][0]:
-                check_group = [k[0] + str(i) for i in cols]
-            elif k[1] == v[0][1]:
-                check_group = [str(i) + k[1]  for i in rows]
-            else:
-                check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
-            vals = list(values[k])
-
-            # iterate through the group and remove nt values
-            for c in check_group:
-                if c != k and c != v and len(values[c]) > 1:
-                    p_vals = list(values[c])
-                    for i in vals:
-                        if i in p_vals and len(p_vals) > 1:
-                            del p_vals[p_vals.index(i)]
-                            print("before", c, values[c])
-                            values[c] = ''.join(p_vals)
-                            print("after", c, values[c])
-    return (values)
+    # # fill in the values for peer boxes with the same values
+    # for box in nt_dict.keys():
+    #     box_peers = list(peers[box]) # create a copy of the peers list
+    #     # list peers that have 2 values
+    #     box_p2 = [p for p in box_peers if values[p] == values[box]]
+    #     # for each peer, check if the peer values are the same as the
+    #     nt_dict[box] = box_p2
+    # print(nt_dict)
+    # # replace values in relevant row, col
+    #
+    # for k, v in nt_dict.items():
+    #     # determine if the two values are in a row, column or diagonal
+    #     if len(v) >= 1:
+    #         if k[0] ==  v[0][0]:
+    #             check_group = [k[0] + str(i) for i in cols]
+    #         elif k[1] == v[0][1]:
+    #             check_group = [str(i) + k[1]  for i in rows]
+    #         else:
+    #             check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
+    #         vals = list(values[k])
+    #
+    #         # iterate through the group and remove nt values
+    #         for c in check_group:
+    #             if c != k and c != v and len(values[c]) > 1:
+    #                 p_vals = list(values[c])
+    #                 for i in vals:
+    #                     if i in p_vals and len(p_vals) > 1:
+    #                         del p_vals[p_vals.index(i)]
+    #                         print("before", c, values[c])
+    #                         values[c] = ''.join(p_vals)
+    #                         print("after", c, values[c])
+    # return (values)
 
 
 
