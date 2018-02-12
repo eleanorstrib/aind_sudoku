@@ -35,53 +35,51 @@ def naked_twins(values):
     # iterate through each unit list:
     for unit in unitlist:
         # check if any value for a square in the list is equal to any other value
+        # make a list of values in the squares
         v_list = [values[square] for square in unit]
-        dupes = [u for u in v_list if v_list.count(u) > 1 and len(u) == 2]
-        print(dupes)
-        # uniques = list(set([values[square] for square in unit]))
-        # # proceed if the length of the uniques is shorter than the length of the unit
-        # if len(uniques) < len(unit):
-        #     dupes = {k:v for k, v in }
-        # else:
-        #     continue
-    # find all two value boxes in the puzzle - potential naked twins pairs
-    # two_val_boxes = [box for box in values.keys() if len(values[box]) == 2]
-    # nt_dict = {k:[] for k in two_val_boxes}
+
+        # find all duplicate values in that list that could be naked twins
+        nt_dupes_index = [i for i in range(0, len(v_list)) if
+                            v_list.count(v_list[i]) > 1 and len(v_list[i]) == 2]
+        nt_dupe_vals = [v_list[k] if k in nt_dupes_index]
+        print (nt_dupe_vals)
+        # continue if there are duplicate values in the v_dupes list
+        if len(nt_dupes_index) > 0:
+            no_nt_list = v_list[:]
+            # make lists of vales in nt_exclude boxes to check
+            non_nt_index = [n for n in range(len(v_list)) if n not in nt_dupes_index]
+
+            for j in non_nt_index:
+                vals = list(v_list[j])
+                if len(vals) > 1:
+
+            # if len(sq_not_nt_vals) > 1:
+            #     for s in range(len(sq_not_nt_vals)):
+            #         sqv = list(sq_not_nt_vals[s])
+            #         for q in sqv:
+            #             if q in nt_search:
+            #                 # create a new variable with the nt value removed
+            #                 new_sqv = sqv.remove(q)
+            #                 # reassign the value of the square in the values dict
+            #                 values[sq_not_nt[s]] = new_sqv
 
 
-    # # fill in the values for peer boxes with the same values
-    # for box in nt_dict.keys():
-    #     box_peers = list(peers[box]) # create a copy of the peers list
-    #     # list peers that have 2 values
-    #     box_p2 = [p for p in box_peers if values[p] == values[box]]
-    #     # for each peer, check if the peer values are the same as the
-    #     nt_dict[box] = box_p2
-    # print(nt_dict)
-    # # replace values in relevant row, col
-    #
-    # for k, v in nt_dict.items():
-    #     # determine if the two values are in a row, column or diagonal
-    #     if len(v) >= 1:
-    #         if k[0] ==  v[0][0]:
-    #             check_group = [k[0] + str(i) for i in cols]
-    #         elif k[1] == v[0][1]:
-    #             check_group = [str(i) + k[1]  for i in rows]
-    #         else:
-    #             check_group = [p for p in peers[k] if p[0] != k[0] and p[1] !=k[1]]
-    #         vals = list(values[k])
-    #
-    #         # iterate through the group and remove nt values
-    #         for c in check_group:
-    #             if c != k and c != v and len(values[c]) > 1:
-    #                 p_vals = list(values[c])
-    #                 for i in vals:
-    #                     if i in p_vals and len(p_vals) > 1:
-    #                         del p_vals[p_vals.index(i)]
-    #                         print("before", c, values[c])
-    #                         values[c] = ''.join(p_vals)
-    #                         print("after", c, values[c])
-    # return (values)
+    return (values)
 
 
 
 naked_twins(values)
+
+
+# for i in range(len(nt_exclude)):
+#     square = nt_exclude[i]
+#     square_values = list(values[square])
+#     print("sq val", square_values)
+#     for f in found_nt:
+#         for fi in f:
+#             if fi in square_values and len(square_values) > 1:
+#                 square_values.remove(fi)
+#                 print("removed", fi)
+#                 values[square] = square_values
+#             else:
+#                 values[square] = square_values[0]
