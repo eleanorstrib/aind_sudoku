@@ -6,11 +6,13 @@ column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
 unitlist = row_units + column_units + square_units
 
+
 # TODO: Update the unit list to add the new diagonal units
 diagonal_lr = [rows[i] + cols[i] for i in range(len(rows))]
-diagonal_rl = [rows[i] + cols[i] for i in range(len(rows) -1, -1, -1)]
-unitlist.append(diagonal_rl)
+rcols = cols[::-1]
+diagonal_rl = [rows[i] + rcols[i] for i in range(len(rows) -1, -1, -1)]
 unitlist.append(diagonal_lr)
+unitlist.append(diagonal_rl)
 
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
@@ -18,6 +20,7 @@ peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
 
 def naked_twins(values):
+    # TODO: write this function
     # iterate through each unit list:
     for unit in unitlist:
         # check if any value for a square in the list is equal to any other value
