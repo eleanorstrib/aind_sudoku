@@ -36,33 +36,60 @@ def naked_twins(values):
     for unit in unitlist:
         # check if any value for a square in the list is equal to any other value
         # make a list of values in the squares
-        v_list = [values[square] for square in unit]
+        val_list = [values[square] for square in unit]
 
         # find all duplicate values in that list that could be naked twins
-        nt_dupes_index = [i for i in range(0, len(v_list)) if
-                            v_list.count(v_list[i]) > 1 and len(v_list[i]) == 2]
-        nt_dupe_vals = [v_list[k] if k in nt_dupes_index]
-        print (nt_dupe_vals)
-        # continue if there are duplicate values in the v_dupes list
-        if len(nt_dupes_index) > 0:
-            no_nt_list = v_list[:]
-            # make lists of vales in nt_exclude boxes to check
-            non_nt_index = [n for n in range(len(v_list)) if n not in nt_dupes_index]
+        # criteria are 1) the number appears exactly twice in val_list and
+        # 2) the number is 2 digits long
+        nt_dupes_index = [i for i in range(0, len(val_list)) if
+                    val_list.count(val_list[i]) == 2  and len(val_list[i]) == 2]
 
-            for j in non_nt_index:
-                vals = list(v_list[j])
-                if len(vals) > 1:
+        # if there is at least one pair of naked twins
+        if len(nt_dupes_index) == 2:
+            # create a variable for the nt value
+            nt_value = val_list[nt_dupes_index[0]]
+            # turn the two values into a list
+            nt_list_values = list(val_list[nt_dupes_index[0]])
+            # iterate through the val_list to find common digits
+            idx = 0
+            for v in val_list:
+                if len(v) > 1 and v != nt_value:
+                    v_list = list(v)
+                    found_nt_vals = [j for j in v_list if j in nt_list_values]
+                    # if nt numbers found in value, replace it in the values dict
+                    if len(found_nt_vals) > 0:
+                        for k in found_nt_vals:
+                            values[unit[idx]] = values[unit[idx]].replace(k, "")
+                idx += 1
 
-            # if len(sq_not_nt_vals) > 1:
-            #     for s in range(len(sq_not_nt_vals)):
-            #         sqv = list(sq_not_nt_vals[s])
-            #         for q in sqv:
-            #             if q in nt_search:
-            #                 # create a new variable with the nt value removed
-            #                 new_sqv = sqv.remove(q)
-            #                 # reassign the value of the square in the values dict
-            #                 values[sq_not_nt[s]] = new_sqv
 
+        # no naked twin pairs found
+        else:
+            continue
+        #
+        # nt_dupe_vals = [v_list[k] if k in nt_dupes_index]
+        # print(nt_dupe_vals)
+        #
+        # # continue if there are duplicate values in the v_dupes list
+        # if len(nt_dupes_index) > 0:
+        #     no_nt_list = v_list[:]
+        #     # make lists of vales in nt_exclude boxes to check
+        #     non_nt_index = [n for n in range(len(v_list)) if n not in nt_dupes_index]
+        #
+        #     for j in non_nt_index:
+        #         vals = list(v_list[j])
+        #         if len(vals) > 1:
+        #
+        #     # if len(sq_not_nt_vals) > 1:
+        #     #     for s in range(len(sq_not_nt_vals)):
+        #     #         sqv = list(sq_not_nt_vals[s])
+        #     #         for q in sqv:
+        #     #             if q in nt_search:
+        #     #                 # create a new variable with the nt value removed
+        #     #                 new_sqv = sqv.remove(q)
+        #     #                 # reassign the value of the square in the values dict
+        #     #                 values[sq_not_nt[s]] = new_sqv
+        #
 
     return (values)
 
